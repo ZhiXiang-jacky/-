@@ -27,7 +27,8 @@ import xlrd
 from numba import jit
 import pickle
 import Data_Normalization as DN;         #嘉謙paper正歸化目標資料(已將套件改成適合此案例方式)
-import threading
+# import threading
+import multiprocessing
 import pdb
 import pickle
 import copy
@@ -1167,14 +1168,14 @@ def Forward_Insertion_Method_Improved(arg1, Zip_OrderNumber_Stime_Endtime, temp_
 if __name__ =='__main__':
     t= []
     for i in range(nb_threads):
-        t.append(threading.Thread(target = Forward_Insertion_Method_Improved, args=(i, List_OrderNumber_Stime_Endtime,temp_Select_Fitness_Df1)))
+        t.append(multiprocessing.Process(target = Forward_Insertion_Method_Improved, args=(i, List_OrderNumber_Stime_Endtime,temp_Select_Fitness_Df1)))
     
     print('>>>>>>>>>>>>>>>>>>>>>>>>> thread_create')
     st = time.time()
     for _t in t:
         _t.start()
     # pdb.set_trace()
-    time.sleep(1)
+    # time.sleep(1)
     print('<<<<<<<<<<<<<<<<<<<<<<<<< thread_join')
     for _t in t:
         _t.join()
